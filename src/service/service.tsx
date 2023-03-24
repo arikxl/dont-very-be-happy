@@ -28,10 +28,6 @@ export const combineWords = async (secondWord: string, setSuggestion: Function) 
     }
 }
 
-// export const handleGetResult = (input: string) => {
-//   combineWords(input)
-// }
-
 
 export const getRandomAdjective = async () => {
   // Generate random adjective
@@ -56,8 +52,4 @@ export const getRandomAdjective = async () => {
   }
 }
 
-// export const handleRandomResult = async () => {
-//   const adjective = await getRandomAdjective()
-//   setInput(adjective)
-//   handleGetResult(adjective)
-// }
+

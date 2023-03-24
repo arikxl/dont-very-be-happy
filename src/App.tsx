@@ -1,26 +1,17 @@
 import { FC, useState } from "react";
-import { Configuration, OpenAIApi } from "openai";
+
 import { combineWords, getRandomAdjective } from "./service/service";
-
-const configuration = new Configuration({
-  apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
-
 
 interface AppProps { }
 
-
-const App: FC<AppProps> = ({ }) => {
+const App: FC<AppProps> = () => {
 
   const [input, setInput] = useState<string>('');
   const [suggestion, setSuggestion] = useState<string>('');
 
-
   const handleGetResult = (input: string) => {
     combineWords(input, setSuggestion)
   }
-
 
   const handleRandomResult = async () => {
     const adjective = await getRandomAdjective()
@@ -28,14 +19,26 @@ const App: FC<AppProps> = ({ }) => {
     handleGetResult(adjective)
   }
 
+  const P =  ({children}:any, span:any) => {
+    return (
+      <p className={`text-center col-span-${span} text-xl sm:text-4xl 
+        lg:text-5xl xl:text-6xl font-bold`}>{children}</p>
+      // <p className={`text-center flex text-xl sm:text-4xl 
+      //   lg:text-5xl xl:text-6xl font-bold`}>{children}</p>
+    )
+  }
+
   return (
-    <div className='max-w-6xl mx-auto min-h-screen flex flex-col items-center mt-32 mb-16 sm:text-center sm:mb-0'>
+    <div className='max-w-6xl mx-auto min-h-screen flex flex-col items-center
+     mt-32 mb-16 sm:text-center sm:mb-0'>
       <div className='text-gray-400 text-center'>
-        Combine "very" with a simple adjective and get a more concise adjective
+        Combine "very" with a simple adjective and get a more concise word
       </div>
+      {/* <div className='flex justify-center items-center w-full mb-4 py-16'> */}
       <div className='grid grid-cols-12 justify-center items-center w-full mb-4 py-16'>
-        <p className='text-center col-span-2 text-xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold'>very</p>
-        <p className='text-center col-span-1 text-xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold'>+</p>
+        <P span={4}>very</P>
+        &nbsp; 
+        <P span={1}>+</P>
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -43,7 +46,8 @@ const App: FC<AppProps> = ({ }) => {
           type='text'
           className='col-span-4 text-center border-b-2 font-sans text-xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold h-24 transition duration-200 bg-white  border-gray-300 appearance-none focus:outline-none'
         />
-        <p className='text-center col-span-1 text-xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold'>=</p>
+        <P span={1}>=</P>
+
         <div className='text-center  w-96 col-span-4'>
           <p
             className={`cursor-pointer text-center text-xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold 
