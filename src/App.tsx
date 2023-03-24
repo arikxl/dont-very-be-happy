@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
+import { combineWords, getRandomAdjective } from "./service/service";
 
 const configuration = new Configuration({
   apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -15,24 +16,16 @@ const App: FC<AppProps> = ({ }) => {
   const [input, setInput] = useState<string>('');
   const [suggestion, setSuggestion] = useState<string>('');
 
-  const handleGetResult = async () => {
 
-    try {
-      const result = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: `Combine the word "very" with another adjective to find a more suitable adjective.\n\nvery + cold = freezing\nvery + nice = charming\nvery + high = steep\nvery + shining = gleaming\nvery + ${input} =`,
-        temperature: 0.7,
-        max_tokens: 25,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-      });
-      if (!result.data.choices?.[0].text) throw new Error('Invalid response');
-      setSuggestion(result.data.choices?.[0].text)
-      
-    } catch (error) {
-      console.error(error)
-    }
+  const handleGetResult = (input: string) => {
+    combineWords(input, setSuggestion)
+  }
+
+
+  const handleRandomResult = async () => {
+    const adjective = await getRandomAdjective()
+    setInput(adjective)
+    handleGetResult(adjective)
   }
 
   return (
@@ -64,7 +57,7 @@ const App: FC<AppProps> = ({ }) => {
         <div className='pr-6 cursor-pointer'>
           <button
             type='button'
-            onClick={handleGetResult}
+            onClick={() => handleGetResult(input)}
             className='border-solid bg-black inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none'>
             Get/Refresh Result
           </button>
@@ -72,7 +65,7 @@ const App: FC<AppProps> = ({ }) => {
         <div className='pl-6 cursor-pointer'>
           <button
             type='button'
-            // onClick={handleRandomResult}
+            onClick={handleRandomResult}
             className='border-solid bg-black inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none'>
             Random
           </button>
