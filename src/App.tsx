@@ -34,9 +34,11 @@ const App: FC<AppProps> = () => {
     <>
       <AppHeader />
       <div className='max-w-[95%] lg:max-w-[80%] mx-auto h-[70vh] bg-gray-200
-       flex flex-col items-center sm:text-center justify-between'>
-        <div className='text-gray-00 text-center'>
-          Combine "very" with a simple adjective and get a more concise word
+       flex flex-col items-center sm:text-center justify-around'>
+        <div className='text-gray-00 text-center '>
+          Combine "very" with a simple adjective
+            <br className='md:hidden' />
+          and get a more concise word
         </div>
         {/* <div className='flex justify-center items-center w-full mb-4 py-16'> */}
         <div className='flex flex-col justify-around items-center
