@@ -5,8 +5,6 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-
-
 export const combineWords = async (secondWord: string, setSuggestion: Function) => {
     try {
       const result = await openai.createCompletion({
@@ -30,7 +28,6 @@ export const combineWords = async (secondWord: string, setSuggestion: Function) 
 
 
 export const getRandomAdjective = async () => {
-  // Generate random adjective
   try {
     const result = await openai.createCompletion({
       model: "text-davinci-003",

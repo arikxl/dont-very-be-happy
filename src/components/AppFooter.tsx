@@ -1,7 +1,7 @@
 
 const AppFooter = () => {
     return (
-        <footer className="bg-green-400 h-[10vh] text-white text-lg md:text-4xl
+        <footer className="bg-green-400 h-[10vh] text-white text-lg md:text-2xl
         items-center flex justify-center flex-col lg:flex-row">
             <p>
                 Created lacklusterly by&nbsp;
