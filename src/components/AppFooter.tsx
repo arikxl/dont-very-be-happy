@@ -5,7 +5,7 @@ const AppFooter = () => {
         items-center flex justify-center flex-col lg:flex-row">
             <p>
                 Created lacklusterly by&nbsp;
-                <a href="https://www.producthunt.com/@cnnr_cllhn" target="_blank"
+                <a href="https://www.linkedin.com/in/arik-alexandrov/" target="_blank"
                     className="underline" rel="noreferrer">
                     arikxl
                 </a>
