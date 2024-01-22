@@ -6,6 +6,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export const combineWords = async (secondWord: string, setSuggestion: Function) => {
+  
     try {
       const result = await openai.createCompletion({
         model: "text-davinci-003",
@@ -16,11 +17,14 @@ export const combineWords = async (secondWord: string, setSuggestion: Function) 
         frequency_penalty: 0,
         presence_penalty: 0,
       })
+      console.log('result:', result)
 
       if (!result.data.choices?.[0].text) throw new Error('Invalid response')
       const suggestion = result.data.choices[0].text
+      console.log('suggestion:', suggestion)
 
       setSuggestion(suggestion)
+      console.log('setSuggestion(suggestion):', setSuggestion(suggestion))
     } catch (error) {
       console.error(error)
     }

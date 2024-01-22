@@ -47,7 +47,7 @@ const App: FC<AppProps> = () => {
           <P >+ </P>
 
           <form onSubmit={(e) => handleGetResult(input, e)}
-            className=' bg-red-400 w-[80%] md:w-[35%] '>
+            className='  w-[80%] md:w-[35%] '>
             <input
               value={input}
               onSubmit={(e) => handleGetResult(input, e)}
