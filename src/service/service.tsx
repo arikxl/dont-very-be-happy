@@ -1,51 +1,47 @@
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
+  dangerouslyAllowBrowser: true
+  }
+);
+
 
 export const combineWords = async (secondWord: string, setSuggestion: Function) => {
-  
-    try {
-      const result = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: `Combine the word "very" with another adjective to find a more suitable adjective.\n\nvery + cold = freezing\nvery + nice = charming\nvery + high = steep\nvery + shining = gleaming\nvery + ${secondWord} =`,
-        temperature: 0.7,
-        max_tokens: 25,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-      })
-      console.log('result:', result)
 
-      if (!result.data.choices?.[0].text) throw new Error('Invalid response')
-      const suggestion = result.data.choices[0].text
-      console.log('suggestion:', suggestion)
+  try {
+    const result = await openai.completions.create({
+      model: 'gpt-3.5-turbo-instruct',
+      prompt: `Combine the word "very" with another adjective to find a more suitable adjective.\n\nvery + cold = freezing\nvery + nice = charming\nvery + high = steep\nvery + shining = gleaming\nvery + ${secondWord} =`
+    });
 
-      setSuggestion(suggestion)
-      console.log('setSuggestion(suggestion):', setSuggestion(suggestion))
-    } catch (error) {
-      console.error(error)
-    }
+    if (!result.choices?.[0]?.text) throw new Error('Invalid response');
+    const suggestion = result.choices[0].text;
+
+
+    setSuggestion(suggestion);
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 
-export const getRandomAdjective = async () => {
-  try {
-    const result = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt:
-        'Come up with one random adjective that goes well with the word "very" in front of it:\nAdjective: very',
-      temperature: 0.7,
-      max_tokens: 256,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-    })
 
-    if (!result.data.choices?.[0].text) throw new Error('Invalid response')
-    const adjective = result.data.choices[0].text.trim()
+export const getRandomAdjective = async () => {
+
+  try {
+
+
+    const result = await openai.completions.create({
+      model: 'gpt-3.5-turbo-instruct',
+      prompt: 'Come up with one random adjective that goes well with the word "very" in front of it:\nAdjective: very',
+
+    });
+
+    if (!result.choices?.[0].text) throw new Error('Invalid response')
+    const adjective = result.choices[0].text.trim()
+    
+    if (!result.choices?.[0]?.text) throw new Error('Invalid response');
 
     return adjective
   } catch (error) {
